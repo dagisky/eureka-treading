@@ -1,10 +1,18 @@
 package com.myRestful.rest.webservices.restfulwebservices.User;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
 public class User {
+    @JsonIgnore
     private Integer id;
+
+    @Size(min=7, message = "Name should have at least 7 characters")
     private String name;
+
+    @Past
     private Date birthDate;
 
     protected User() {

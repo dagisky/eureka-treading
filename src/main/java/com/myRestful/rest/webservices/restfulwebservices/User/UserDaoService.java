@@ -20,6 +20,7 @@ public class UserDaoService {
     public List<User> findAll(){
         return  users;
     }
+
     public User save(User user){
         if(user.getId() == null){
             user.setId(++userCount);
@@ -27,6 +28,7 @@ public class UserDaoService {
         users.add(user);
         return user;
     }
+
     public User findOne(int id){
         for(User user: users){
             if(user.getId() == id)
@@ -46,6 +48,12 @@ public class UserDaoService {
         }
         return null;
     }
+
+
+
+
+
+
 
 }
 
