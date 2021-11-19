@@ -1,11 +1,18 @@
-package com.myRestful.rest.webservices.restfulwebservices.User;
+package com.myRestful.rest.webservices.restfulwebservices.Models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 import java.util.Date;
 
+@Entity
 public class User {
+    @Id
+    @GeneratedValue
     @JsonIgnore
     private Integer id;
 
