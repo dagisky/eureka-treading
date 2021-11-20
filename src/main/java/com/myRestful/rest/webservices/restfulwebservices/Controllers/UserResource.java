@@ -1,8 +1,6 @@
 package com.myRestful.rest.webservices.restfulwebservices.Controllers;
-
-import com.myRestful.rest.webservices.restfulwebservices.GlobalExecption.UserNotFoundException;
 import com.myRestful.rest.webservices.restfulwebservices.Models.User;
-import com.myRestful.rest.webservices.restfulwebservices.Services.UserDaoService;
+import com.myRestful.rest.webservices.restfulwebservices.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
@@ -17,19 +15,17 @@ import java.util.List;
 @RestController
 public class UserResource {
     @Autowired
-    private UserDaoService service;
+    private UserService userService;
 
     @GetMapping("/user")
     public List<User> retriveAllUsers(){
-        return service.findAll();
+        return userService.findAll();
     }
 
 
     @GetMapping("/user/{id}")
     public EntityModel<User> retriveUser(@PathVariable int id){
-        User user = service.findOne(id);
-        if (user == null)
-            throw new UserNotFoundException("id-"+id);
+        User user = userService.findById(id);
         EntityModel<User> model = EntityModel.of(user);
         WebMvcLinkBuilder linkBuilder =
                 WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(this.getClass()).retriveAllUsers());
@@ -39,14 +35,12 @@ public class UserResource {
 
     @DeleteMapping("/user/delete/{id}")
     public void deleteUser(@PathVariable int id){
-        User user = service.deleteById(id);
-        if(user == null)
-            throw new UserNotFoundException("id-"+id);
+        userService.deleteById(id);
     }
 
     @PostMapping("/user")
     public ResponseEntity.BodyBuilder createUser(@Valid @RequestBody User user){
-        User savedUser = service.save(user);
+        User savedUser = userService.save(user);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}").buildAndExpand(savedUser.getId()).toUri();
         return ResponseEntity.created(location);

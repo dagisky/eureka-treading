@@ -1,6 +1,9 @@
 package com.myRestful.rest.webservices.restfulwebservices.Models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,6 +13,9 @@ import javax.validation.constraints.Size;
 import java.util.Date;
 
 @Entity
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class User {
     @Id
     @GeneratedValue
@@ -22,36 +28,9 @@ public class User {
     @Past
     private Date birthDate;
 
-    protected User() {
-    }
+    private String username;
 
-    public User(Integer id, String name, Date birthDate) {
-        this.id = id;
-        this.name = name;
-        this.birthDate = birthDate;
-    }
+    @JsonIgnore
+    private String password;
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Date getBirthDate() {
-        return birthDate;
-    }
-
-    public void setBirthDate(Date birthDate) {
-        this.birthDate = birthDate;
-    }
 }
